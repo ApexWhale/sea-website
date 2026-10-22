@@ -1,5 +1,124 @@
-:root{color-scheme:dark;--bg:#151310;--paper:#eee1be;--muted:#b9ad94;--gold:#d9b36a;--border:#8e704043}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;color:var(--paper);background:radial-gradient(ellipse at 50% 10%,#43302155,transparent 60%),repeating-linear-gradient(115deg,#ffffff02 0 1px,transparent 1px 5px),var(--bg);font:16px/1.7 Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}a:focus-visible{outline:2px solid #f5ce7f;outline-offset:6px}[hidden]{display:none!important}.wrap{width:min(1280px,90%);margin-inline:auto}.header{min-height:100px;display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:12px;font:700 17px/1.4 Georgia,serif;letter-spacing:1.4px}.brand small{display:block;font:9px/1.8 Arial,sans-serif;letter-spacing:1.8px;color:var(--muted)}nav{display:flex;gap:24px;align-items:center;font-size:12px}nav a:hover,.text-link:hover{color:#ffdb91}.nav-discord{border:1px solid #94703f;padding:9px 16px;background:linear-gradient(#45341c,#2b2117);color:var(--gold)}.skip{position:absolute;top:-100px;left:15px;z-index:10;background:var(--paper);color:var(--bg);padding:10px}.skip:focus{top:10px}.hero{padding-top:30px;padding-bottom:52px}.banner-frame{padding:5px;background:linear-gradient(135deg,#9e7740,#3a2b1b 35%,#bb9454 70%,#49341c);border:1px solid #a88248;box-shadow:0 15px 45px #0009,inset 0 0 0 1px #e8c48055;position:relative}.banner-frame:before,.banner-frame:after{content:'◆';position:absolute;top:-13px;font-size:19px;color:var(--gold);text-shadow:0 2px 4px #000}.banner-frame:before{left:-8px}.banner-frame:after{right:-8px}.guild-banner{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:contain}.hero-content{text-align:center;padding-top:35px}.eyebrow{font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--gold)}h1,h2,h3{font-family:Georgia,'Times New Roman',serif}h1{font-size:clamp(38px,4.8vw,68px);line-height:1.12;font-weight:400;letter-spacing:-1.5px;margin:18px 0;text-shadow:0 3px 10px #000}em{font-weight:400;color:var(--gold)}.hero-tagline{font:21px/1.4 Georgia,serif;letter-spacing:1px;margin:16px 0 8px}.gold{color:var(--gold)}.intro{font-size:14px;color:var(--muted);margin:10px 0 24px}.hero-actions{display:flex;flex-wrap:wrap;gap:15px;justify-content:center}.button{display:inline-flex;align-items:center;justify-content:center;gap:30px;padding:13px 25px;color:#fff0cb;font-size:12px;font-weight:bold;background:linear-gradient(#855f2c,#4d341a);border:1px solid #c29a55;box-shadow:inset 0 0 0 2px #291e1450,0 3px 10px #0004;transition:filter .2s}.button:hover{filter:brightness(1.2)}.secondary{background:linear-gradient(#302b22,#211d18);border-color:#6a5737}.ribbon{border-block:1px solid var(--border);background:linear-gradient(#2c2419,#211c15);box-shadow:0 3px 12px #0004}.ribbon-inner{min-height:66px;display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:10px;letter-spacing:2px;color:var(--muted)}.ribbon b,.star{color:var(--gold)}.star{font-size:22px}.section{padding-block:80px;display:grid;grid-template-columns:1fr 1fr;gap:70px}h2{font-size:clamp(34px,3.7vw,50px);font-weight:400;line-height:1.2;letter-spacing:-1px;margin:20px 0}.guild-copy{position:relative;padding:32px;color:#483923;background:radial-gradient(ellipse at 20% 0%,#f0ddb4,#d1b881);border:1px solid #bc985b;box-shadow:0 8px 30px #0005,inset 0 0 26px #70502438;font-size:14px}.guild-copy:before{content:'';position:absolute;inset:7px;border:1px solid #70502440;pointer-events:none}.guild-copy .lead{font:24px/1.4 Georgia,serif;margin-top:0;color:#312619}.guild-copy strong{color:#312619}.text-link{display:inline-flex;align-items:center;gap:24px;font-size:12px;font-weight:700;border-bottom:1px solid #b6935466;padding-block:10px}.guild-copy .text-link{position:relative;color:#543612}.guild-copy .text-link:hover{color:#21160a}.manifesto{position:relative;overflow:hidden;padding:48px 55px;border:1px solid #8c6b3c;background:radial-gradient(ellipse at right,#44341c80,transparent 70%),linear-gradient(130deg,#24231c,#171b17);box-shadow:inset 0 0 0 5px #171512,inset 0 0 0 6px #69513566,0 12px 40px #0005}.manifesto p{position:relative;z-index:1;font:clamp(34px,4vw,54px)/1.25 Georgia,serif;margin:20px 0 5px}.sigil{position:absolute;right:8%;top:10%;font-size:190px;color:#d3b57620;line-height:1.3}.connect-intro{font-size:14px;color:var(--muted)}.destinations{display:grid;gap:18px;align-content:start}.destinations article{display:flex;gap:20px;padding:27px;background:linear-gradient(135deg,#30291f,#201d18);border:1px solid #765a354d;box-shadow:inset 0 0 0 4px #17151266}.destination-number{color:var(--gold);font-size:10px;padding-top:5px}.destinations h3{font-size:24px;font-weight:400;margin:0 0 9px}.destinations p{font-size:13px;color:var(--muted);margin:0}.destination-icon{margin-left:auto;color:var(--gold);font-size:23px}.closing{text-align:center;border-block:1px solid var(--border);padding:62px 5%;background:radial-gradient(ellipse at bottom,#65432044,transparent 70%)}.closing h2{font-size:clamp(36px,4.5vw,60px)}footer{display:flex;align-items:center;gap:35px;padding-block:30px}.footer-brand{font-size:11px;font-weight:bold;letter-spacing:1px;white-space:nowrap}.footer-brand span{color:var(--gold)}footer p{font-size:10px;color:var(--muted);max-width:580px}.version{font-size:10px;color:var(--muted);margin-left:auto}@media(max-width:760px){.header{flex-wrap:wrap;justify-content:center;padding-block:18px;gap:16px}.brand{font-size:15px}.brand img{width:35px;height:40px}nav{justify-content:center;gap:22px;width:100%;font-size:11px}.nav-dashboard{display:none}.nav-discord{padding:6px 10px}.hero{padding-top:20px;padding-bottom:38px}.wrap{width:92%}.banner-frame{width:96%;padding:3px}.hero-content{padding-top:22px}.eyebrow{font-size:8px;letter-spacing:1.8px}.hero-tagline{font-size:19px}.intro{max-width:290px;margin-inline:auto}.button{padding:12px 17px;gap:15px;font-size:11px}.ribbon-inner{justify-content:center;flex-wrap:wrap;gap:12px;padding-block:16px;font-size:8px;letter-spacing:1px}.ribbon-inner>span:last-child,.ribbon-inner>.star:nth-last-child(2){display:none}.section{grid-template-columns:1fr;padding-block:50px;gap:20px}.guild-copy{padding:27px}.manifesto{padding:32px 25px}.sigil{right:-20px;font-size:145px;top:20%}.destinations article{padding:22px 18px;gap:12px}.destinations h3{font-size:22px}.destination-icon{font-size:19px}.closing{padding-block:45px}footer{flex-wrap:wrap;gap:10px}footer p{order:3;width:100%;margin-top:3px}.version{margin-left:auto}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-/* v1.2: guild content, adventure artwork, class hall and joining guide */
-.section-heading{max-width:760px;margin-bottom:35px}.section-heading>p:not(.eyebrow){color:var(--muted);font-size:14px}.adventures{padding-bottom:80px}.adventure-landscape{position:relative;border:1px solid #9a7945;padding:5px;background:#342819;box-shadow:0 12px 35px #0006}.adventure-landscape img{width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;display:block}.adventure-landscape span{position:absolute;bottom:18px;left:25px;color:#f3e2bb;letter-spacing:2px;font-size:9px;text-shadow:0 2px 5px #000;background:#151310b0;padding:5px 10px}.adventure-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--border);border-top:0;background:linear-gradient(#30271d,#201c16)}.adventure-grid article{padding:30px;border-right:1px solid var(--border)}.adventure-grid article:last-child{border:0}.adventure-grid h3{font-size:25px;font-weight:400;line-height:1.3;margin:15px 0}.adventure-grid p{color:var(--muted);font-size:13px}.adventure-grid .text-link{font-size:11px}.art-caption,.class-note{font-size:11px;color:var(--muted)}.art-caption{text-align:right}.classes-section{padding:70px 0;border-block:1px solid var(--border);background:radial-gradient(ellipse at top,#28344077,transparent 75%),#111618}.class-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.class-grid article{--class:#d9b36a;position:relative;background:linear-gradient(145deg,#2c2925,#171a1c);border:1px solid #7d715547;padding:25px;box-shadow:inset 0 0 0 4px #0002}.class-grid article>span{font-size:30px;color:var(--class);display:block;line-height:1.3;text-shadow:0 0 25px var(--class)}.class-grid h3{color:var(--class);font-size:23px;font-weight:400;margin:12px 0 7px}.class-grid p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}.class-warrior{--class:#c79c6e!important}.class-paladin{--class:#f58cba!important}.class-hunter{--class:#abd473!important}.class-rogue{--class:#fff08a!important}.class-priest{--class:#f0e6d2!important}.class-mage{--class:#69ccf0!important}.class-warlock{--class:#b8a2ec!important}.class-druid{--class:#ffad62!important}.class-note{margin-top:25px}.join-steps{list-style:none;counter-reset:steps;padding:0;margin:0}.join-steps li{counter-increment:steps;position:relative;padding:0 0 27px 60px;border-left:1px solid #765a35;margin-left:17px}.join-steps li:last-child{border:0;padding-bottom:0}.join-steps li:before{content:counter(steps,decimal-leading-zero);position:absolute;left:-18px;top:0;display:grid;place-items:center;width:36px;height:36px;background:#302619;border:1px solid #9e7943;color:var(--gold);font:12px Georgia,serif}.join-steps h3{font-size:24px;font-weight:400;margin:0 0 8px}.join-steps p{font-size:13px;color:var(--muted);margin:0}.faq{padding-bottom:80px}.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;align-items:start}.faq details{background:#242019;border:1px solid var(--border);padding:20px 24px}.faq summary{cursor:pointer;font:18px/1.5 Georgia,serif;color:var(--paper)}.faq summary::marker{color:var(--gold)}.faq summary:focus-visible{outline:2px solid var(--gold);outline-offset:5px}.faq details p{font-size:13px;color:var(--muted);margin-bottom:0}.header nav{gap:20px}.hero-content .intro{max-width:650px;margin-inline:auto}@media(max-width:1000px){.header{flex-wrap:wrap;justify-content:center;padding-block:18px;gap:14px}.header nav{flex-wrap:wrap;justify-content:center;gap:18px}.class-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.adventure-grid article{padding:22px}.adventure-grid h3{font-size:22px}}@media(max-width:760px){.adventures{padding-bottom:45px}.adventure-grid{grid-template-columns:1fr}.adventure-grid article{border-right:0;border-bottom:1px solid var(--border);padding:25px}.classes-section{padding-block:45px}.class-grid{gap:10px}.class-grid article{padding:18px 14px}.class-grid h3{font-size:21px}.adventure-landscape span{font-size:7px;left:12px;bottom:10px;letter-spacing:1px}.faq-grid{grid-template-columns:1fr}.faq{padding-bottom:45px}.faq details{padding:18px}.join-steps li{padding-left:36px}.header nav{gap:14px}.hero-content .intro{max-width:340px}.section-heading{margin-bottom:25px}}
-
-.class-shaman{--class:#77b0ef!important}@media(min-width:1001px){.class-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Sleep Eat AFK: The Guild Lodge — original v1.3 design */
+:root{color-scheme:dark;--bg:#101c2a;--panel:#172638;--panel-light:#1d3043;--ink:#f6f0df;--muted:#b3c0ce;--gold:#f3bd75;--mint:#a4d6ce;--line:#ffffff1b;--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:radial-gradient(ellipse at 95% 4%,#29405466,transparent 30%),var(--bg);color:var(--ink);font:15px/1.75 'Segoe UI',Arial,sans-serif}
+body::selection{background:#a4d6ce;color:#101c2a}
+a{color:inherit;text-decoration:none}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--mint);outline-offset:6px}
+[hidden]{display:none!important}
+img{max-width:100%}
+.wrap{width:min(1220px,90%);margin-inline:auto}
+.skip{position:absolute;left:20px;top:-100px;z-index:10;background:var(--ink);color:var(--bg);padding:10px 20px}
+.skip:focus{top:12px}
+.realm-strip{background:#0a131e;border-bottom:1px solid var(--line);font-size:9px;font-weight:600;letter-spacing:1.8px;color:var(--muted)}
+.realm-strip .wrap{display:flex;justify-content:space-between;gap:20px;padding-block:9px}
+.realm-strip .wrap span:last-child{color:var(--mint)}
+.header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:26px}
+.brand{display:flex;align-items:center;gap:12px;white-space:nowrap;font-size:15px;font-weight:750;letter-spacing:1.3px;line-height:1.4}
+.brand small{display:block;color:var(--mint);font-size:8px;font-weight:500;letter-spacing:2px;margin-top:5px}
+nav{display:flex;justify-content:center;gap:23px;align-items:center;font-size:12px;color:var(--muted)}
+nav a:hover{color:var(--ink)}
+.nav-discord{white-space:nowrap;padding:9px 17px;border:1px solid #f3bd7550;border-radius:8px;font-size:12px;color:var(--gold);background:#f3bd7508}
+.nav-discord:hover{background:#f3bd7515}
+.hero{padding-top:40px}
+.hero-heading{display:grid;grid-template-columns:1.2fr 1fr;gap:90px;align-items:center;padding:0 3% 45px}
+.eyebrow{font-size:10px;letter-spacing:2.1px;font-weight:650;color:var(--mint);line-height:1.6;margin:0 0 20px}
+h1,h2,h3,p{overflow-wrap:break-word}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400}
+h1{font-size:clamp(50px,5.9vw,82px);letter-spacing:-2.5px;line-height:1.04;margin:0}
+em{color:var(--gold);font-weight:400}
+.hero-afk{display:block;font:400 17px/1.5 'Segoe UI',Arial,sans-serif;letter-spacing:.1px;margin-top:19px;color:var(--muted)}
+.hero-welcome{max-width:370px;position:relative;padding-top:12px}
+.lodge-mark{display:block;font:46px/1 Georgia,serif;color:var(--gold);margin-bottom:14px}
+.hero-welcome p{font-size:15px;color:var(--muted);margin-bottom:22px}
+.hero-welcome strong{font-weight:600;color:var(--ink)}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:25px;background:var(--gold);color:#241c15;font-size:12px;font-weight:700;line-height:1.5;border-radius:8px;padding:14px 23px;border:1px solid transparent;transition:background .2s,transform .2s}
+.button:hover{background:#ffd59f;transform:translateY(-2px)}
+.quiet-link{display:block;width:fit-content;font-size:11px;color:var(--muted);margin-top:17px;border-bottom:1px solid #ffffff30;padding-bottom:3px}
+.quiet-link:hover{color:var(--ink)}
+.banner-frame{margin:0;overflow:hidden;border:1px solid #ffffff26;border-radius:var(--radius);box-shadow:0 24px 65px #0004;background:#0a1420}
+.guild-banner{display:block;width:100%;height:auto}
+.banner-frame figcaption{display:flex;justify-content:space-between;gap:18px;padding:13px 23px;background:#0c1723;font-size:11px;color:var(--muted)}
+.banner-frame figcaption span:first-child{color:var(--mint);font-size:9px;font-weight:600;letter-spacing:2px}
+.guild-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;padding:32px 0;border-bottom:1px solid var(--line)}
+.guild-facts>div{padding:0 22px;border-left:1px solid var(--line)}
+.guild-facts>div:first-child{border:0;padding-left:0}
+.guild-facts dt{font-size:8px;color:var(--muted);letter-spacing:1.5px;margin-bottom:7px}
+.guild-facts dd{margin:0;font-size:15px;font-weight:550}
+.guild-facts a{color:var(--gold)}
+.section{display:grid;grid-template-columns:1fr 1fr;gap:100px;padding-block:96px}
+h2{font-size:clamp(36px,3.8vw,53px);line-height:1.15;letter-spacing:-1.4px;margin:0 0 23px}
+.guild{align-items:center}
+.guild-copy{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:35px;position:relative}
+.guild-copy::before{content:'SEA';position:absolute;right:25px;top:16px;font-size:9px;letter-spacing:2px;color:#a4d6ce99}
+.guild-copy .lead{font:25px/1.35 Georgia,serif;color:var(--ink);margin:0 0 18px;max-width:280px}
+.guild-copy p{font-size:14px;color:var(--muted)}
+.guild-copy strong{color:var(--ink);font-weight:500}
+.text-link{display:inline-flex;align-items:center;gap:15px;padding:7px 0;border-bottom:1px solid #f3bd7540;color:var(--gold);font-size:11px;font-weight:600}
+.text-link:hover{color:#ffdbaf;border-color:var(--gold)}
+.section-heading{margin-bottom:32px}
+.section-heading>p:not(.eyebrow){color:var(--muted);font-size:14px;margin-top:0;max-width:550px}
+.adventures{position:relative;padding-bottom:90px}
+.adventures>.section-heading{display:grid;grid-template-columns:1.2fr 1fr;column-gap:100px;align-items:center}
+.adventures>.section-heading .eyebrow{grid-column:1/-1}
+.adventures>.section-heading h2{margin:0}
+.adventure-landscape{overflow:hidden;border-radius:var(--radius);position:relative;background:#172638;border:1px solid var(--line)}
+.adventure-landscape img{display:block;width:100%;height:auto}
+.adventure-landscape>span{position:absolute;bottom:20px;left:22px;font-size:8px;letter-spacing:2px;color:#fff3de;background:#101c2ad9;padding:8px 14px;border-radius:5px}
+.adventure-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0 0}
+.adventure-grid article{position:relative;min-width:0;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:28px}
+.adventure-grid .eyebrow{font-size:9px;margin-bottom:28px}
+.adventure-grid h3{font-size:27px;line-height:1.25;margin:0 0 14px;letter-spacing:-.5px}
+.adventure-grid p{font-size:13px;color:var(--muted);margin-bottom:20px}
+.adventure-grid .text-link{font-size:10px}
+.art-caption{font-size:9px;color:var(--muted);text-align:right;margin-top:10px}
+.classes-section{position:relative;padding:76px 0;background:linear-gradient(120deg,#1c3043,#122435);border-block:1px solid var(--line)}
+.classes-section .wrap{display:grid;grid-template-columns:.7fr 1.4fr;gap:45px;align-items:start}
+.classes-section .section-heading{position:sticky;top:35px;margin:0}
+.classes-section h2{font-size:clamp(33px,3vw,45px)}
+.class-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.class-grid article{--class:var(--gold);min-width:0;padding:18px 17px;background:#0e1c2ac9;border:1px solid #ffffff12;border-radius:12px;position:relative}
+.class-grid article>span{font-size:22px;color:var(--class);display:block;line-height:1.4}
+.class-grid h3{font-size:21px;margin:8px 0 7px;color:var(--class)}
+.class-grid p{font-size:11px;line-height:1.6;color:var(--muted);margin:0}
+.class-warrior{--class:#d7b28e!important}.class-paladin{--class:#f6b1d4!important}.class-hunter{--class:#b8d991!important}.class-rogue{--class:#f4df8c!important}.class-priest{--class:#f0e6d2!important}.class-mage{--class:#8adaf3!important}.class-warlock{--class:#c6b3ee!important}.class-shaman{--class:#9abbfc!important}.class-druid{--class:#ffb884!important}
+.class-note{grid-column:2;font-size:10px;color:var(--muted);margin:0}
+.join-section{align-items:start}
+.connect-intro{font-size:14px;color:var(--muted);max-width:380px;margin-bottom:25px}
+.join-steps{counter-reset:steps;list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.join-steps li{counter-increment:steps;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 24px 24px 70px;position:relative}
+.join-steps li::before{content:'0' counter(steps);position:absolute;left:23px;top:25px;font-size:12px;color:var(--mint);font-weight:650}
+.join-steps h3{font-size:23px;line-height:1.3;margin:0 0 8px}
+.join-steps p{font-size:12px;color:var(--muted);margin:0}
+.faq{display:grid;grid-template-columns:.7fr 1.3fr;gap:70px;padding-top:10px;padding-bottom:96px}
+.faq-grid{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line);padding:22px 0}
+.faq summary{cursor:pointer;font-size:14px;font-weight:550;color:var(--ink);line-height:1.6}
+.faq summary::marker{color:var(--mint);font-size:11px}
+.faq details[open] summary{color:var(--gold)}
+.faq details p{font-size:13px;color:var(--muted);padding-left:18px;margin-bottom:0;max-width:540px}
+.manifesto{display:flex;gap:35px;align-items:center;padding:33px 45px;border:1px solid #a4d6ce2b;border-radius:var(--radius);background:linear-gradient(115deg,#20393f,#1c2b3d);position:relative;overflow:hidden}
+.motto-symbol{color:var(--gold);font:90px/1 Georgia,serif}
+.manifesto .eyebrow{font-size:8px;margin-bottom:8px}
+.manifesto p:last-child{font:30px/1.25 Georgia,serif;margin:0}
+.motto-stamp{margin-left:auto;align-self:center;color:var(--mint);font-size:18px;line-height:1.8;letter-spacing:5px;text-align:center;opacity:.7;border:1px solid #a4d6ce44;border-radius:50%;width:95px;height:95px;padding-top:12px}
+.connect{gap:80px}
+.destinations{display:grid;gap:15px}
+.destinations article{display:flex;gap:18px;border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--panel)}
+.destination-number{font-size:10px;color:var(--mint);padding-top:5px}
+.destinations h3{font-size:25px;font-weight:400;margin:0 0 6px;line-height:1.25}
+.destinations p{font-size:12px;color:var(--muted);margin:0}
+.destination-icon{font-size:22px;color:var(--mint);margin-left:auto}
+.closing{border-block:1px solid var(--line);background:radial-gradient(ellipse at 50% 100%,#3c494955,transparent 75%),#0b1723;text-align:center;padding:75px 0}
+.closing h2{font-size:clamp(40px,4vw,58px);margin-bottom:28px}
+.closing .quiet-link{margin-inline:auto;margin-top:22px}
+footer{display:flex;gap:35px;align-items:center;padding-block:30px}
+.footer-brand{white-space:nowrap;font-size:11px;font-weight:650;letter-spacing:1px}
+.footer-brand span{color:var(--mint)}
+footer p{color:var(--muted);font-size:9px;line-height:1.8;max-width:560px}
+.version{font-size:10px;color:var(--muted);margin-left:auto;white-space:nowrap}
+@media(max-width:1100px){.header{flex-wrap:wrap;gap:18px}.header nav{order:3;justify-content:flex-start;width:100%;gap:25px;border-top:1px solid var(--line);padding-top:15px}.hero-heading{gap:55px}.classes-section .wrap{grid-template-columns:.65fr 1.4fr;gap:25px}.class-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.class-grid article:last-child{grid-column:1/-1}.section{gap:55px}.faq{gap:40px}}
+@media(max-width:760px){.wrap{width:90%}.realm-strip{font-size:7px;letter-spacing:1px}.header{padding-block:20px}.brand{font-size:12px;gap:8px}.brand img{width:38px;height:38px}.brand small{font-size:7px;letter-spacing:1px}.nav-discord{font-size:10px;padding:8px 11px}.header nav{gap:0;justify-content:space-between;font-size:10px;flex-wrap:wrap;row-gap:12px}.nav-dashboard{margin-left:12px}.hero{padding-top:25px}.hero-heading{grid-template-columns:1fr;gap:28px;padding:0 0 30px}.hero-heading .eyebrow{font-size:8px;letter-spacing:1.7px}h1{font-size:clamp(48px,11vw,70px);letter-spacing:-1.8px}.hero-afk{font-size:14px;margin-top:14px}.hero-welcome{max-width:100%;padding-left:0;padding-top:0}.lodge-mark{display:none}.hero-welcome p{font-size:13px;margin-top:0;margin-bottom:16px}.hero-welcome .quiet-link{display:inline-block;margin:0 0 0 15px;vertical-align:middle}.button{padding:12px 18px;font-size:11px;gap:15px}.banner-frame{border-radius:12px}.banner-frame figcaption{padding:10px 12px;font-size:8px;gap:10px}.banner-frame figcaption span:first-child{font-size:7px;letter-spacing:1px}.guild-facts{grid-template-columns:1fr 1fr;gap:24px 15px;padding:26px 0}.guild-facts>div{padding:0;border:0}.guild-facts dt{font-size:7px;letter-spacing:1px}.guild-facts dd{font-size:13px}.section{grid-template-columns:1fr;gap:25px;padding-block:55px}h2{font-size:36px}.eyebrow{font-size:8px;margin-bottom:15px}.guild-copy{padding:28px}.guild-copy .lead{font-size:23px;padding-right:20px}.guild-copy p{font-size:13px}.adventures{padding-bottom:50px}.adventures>.section-heading{grid-template-columns:1fr;gap:12px}.adventures>.section-heading .eyebrow{margin-bottom:0}.adventures>.section-heading>p:last-child{margin-bottom:0}.adventure-landscape{border-radius:12px}.adventure-landscape>span{font-size:6px;bottom:10px;left:10px;letter-spacing:1px;padding:5px 8px}.adventure-grid{grid-template-columns:1fr;gap:12px;margin-top:14px}.adventure-grid article{padding:25px}.adventure-grid .eyebrow{margin-bottom:15px}.adventure-grid h3{font-size:26px}.art-caption{font-size:8px}.classes-section{padding-block:50px}.classes-section .wrap{grid-template-columns:1fr;gap:25px}.classes-section .section-heading{position:static}.classes-section h2{font-size:36px}.class-grid{gap:10px}.class-grid article{padding:18px 15px}.class-note{grid-column:1;font-size:9px}.class-grid h3{font-size:21px}.class-grid p{font-size:11px}.join-steps li{padding-left:60px}.join-steps h3{font-size:22px}.faq{grid-template-columns:1fr;gap:5px;padding-top:0;padding-bottom:55px}.faq .section-heading{margin-bottom:20px}.faq details{padding-block:19px}.faq summary{font-size:13px}.manifesto{padding:27px 24px;gap:20px}.motto-symbol{font-size:55px}.manifesto p:last-child{font-size:25px}.motto-stamp{display:none}.connect{gap:22px}.destinations article{padding:22px 18px;gap:12px}.destinations h3{font-size:23px}.closing{padding-block:55px}footer{flex-wrap:wrap;gap:8px;padding-block:25px}footer p{order:3;width:100%;margin-top:5px}.version{margin-left:auto}}
+@media(max-width:360px){.hero-welcome .quiet-link{display:block;margin:14px 0 0}.brand{font-size:11px}.nav-discord{font-size:9px;padding:8px}.header nav{font-size:9px}.manifesto{gap:12px;padding:22px 18px}.manifesto p:last-child{font-size:22px}.class-grid article{padding:15px 12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
