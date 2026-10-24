@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, Mock
 from urllib.parse import urlsplit, parse_qs
 import fakeredis
+import redis
 from cryptography.fernet import Fernet
 from app import create_app, COOKIE
 
@@ -124,6 +125,24 @@ class AuthTests(unittest.TestCase):
     def test_global_rate_limit(self):
         self.db.set('sea:limit:login',120)
         self.assertEqual(self.get('/auth/discord').status_code,429)
+
+    def test_rate_limit_keeps_original_expiry(self):
+        self.get('/auth/discord')
+        self.assertEqual(self.db.get('sea:limit:login'), '1')
+        self.assertGreater(self.db.ttl('sea:limit:login'), 0)
+        self.db.expire('sea:limit:login', 20)
+        self.get('/auth/discord')
+        self.assertEqual(self.db.get('sea:limit:login'), '2')
+        self.assertLessEqual(self.db.ttl('sea:limit:login'), 20)
+        self.db.delete('sea:limit:login')
+        self.assertEqual(self.get('/auth/discord').status_code, 302)
+        self.assertEqual(self.db.get('sea:limit:login'), '1')
+
+    def test_rate_limit_contention_fails_closed(self):
+        pipeline_type = type(self.db.pipeline())
+        with patch.object(pipeline_type, 'execute', side_effect=redis.WatchError):
+            self.assertEqual(self.get('/auth/discord').status_code, 503)
+        self.assertEqual(self.db.exists('sea:limit:login'), 0)
 
     def test_invalid_config(self):
         for field, value in [('MEMBER_ROLE_IDS',''),('PUBLIC_BASE_URL','http://example.com'),('DISCORD_GUILD_ID','guild-name'),('MEMBER_ROLE_IDS',self.env['DISCORD_GUILD_ID'])]:

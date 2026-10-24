@@ -1,4 +1,4 @@
-# Sleep Eat AFK — v1.1.0
+# Sleep Eat AFK — v1.1.1
 
 Complete replacement website plus Discord member portal. Public landing page:
 Cloudflare Pages. Private member and officer pages: a separate Railway Python web
@@ -17,6 +17,8 @@ service with Redis. Nothing has been committed, deployed, or connected to Discor
 This release provides member access, not raid scheduling or officer management tools.
 An officer role grants both member and officer access. A member role grants only
 member access. Discord Administrator permission alone does not grant website access.
+
+For macOS setup and the nested folder layout, see MAC-SETUP.md.
 
 ## 1. Apply the complete files in Windows / VS Code
 
@@ -62,7 +64,7 @@ For an EXISTING repository, open VS Code → Terminal → New Terminal (PowerShe
 git status
 git add .
 git diff --cached --stat
-git commit -m "Release v1.1.0: Discord member login and regional FAQ update"
+git commit -m "Release v1.1.1: Discord member login and regional FAQ update"
 git push
 ```
 
@@ -267,4 +269,4 @@ records. All newly added dependencies are listed under backend/requirements*.txt
 
 ## Git commit message
 
-Release v1.1.0: Discord member login and regional FAQ update
+Release v1.1.1: Discord member login and regional FAQ update

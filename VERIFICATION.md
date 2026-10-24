@@ -1,14 +1,14 @@
-# Verification — v1.1.0
+# Verification — v1.1.1
 
 Performed 24 October 2026 against the supplied ZIP and updated files.
 
 ## Passed
 
-- 12 backend unittest cases using Flask's request client, fake Redis (including Lua)
+- 14 backend unittest cases using Flask's request client, fake Redis (without Lua)
   and simulated Discord API responses: member/officer access, live role removal,
   missing sessions, one-use/browser-bound state, state expiry and consent cancellation,
   screening and role denial, sign-out CSRF/origin checks and session invalidation,
-  expired sessions, upstream failures, Redis outage, rate limits and invalid config.
+  expired sessions, upstream failures, Redis outage, rate limits and invalid config; fixed rate-window expiry and fail-closed transaction contention.
 - HTML escaping of the simulated Discord display name; tokens absent from response
   HTML and plaintext Redis session values; Secure/HttpOnly/SameSite cookie flags.
 - JavaScript syntax checks for the updated app.js and supplied config.js.
@@ -37,3 +37,10 @@ external HTTP and made no real Discord requests. The Docker image was not built 
 Follow README.md for setup and live acceptance tests before enabling the public
 login link. Secrets were not provided or invented. Tests use clearly synthetic IDs
 and a temporary encryption key; no test credentials are production configuration.
+
+## v1.1.1 dependency verification
+
+Removed lupa from the local test environment before running all 14 tests; all passed.
+The environment dependency check passed. No actual Redis server or live Discord
+connection was used. The original Mac compiler failure was not reproduced; this
+release removes the package that failed to build.

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 — 24 October 2026
+- Removed the native lupa dependency that blocked macOS test installation.
+- Replaced Lua rate limiting with atomic Redis transactions, preserving fixed expiry.
+- Added expiry and concurrent-update failure tests.
+- Added macOS instructions and nested-folder deployment settings.
+
 ## 1.1.0 — 24 October 2026
 - Updated the regional FAQ with the exact requested wording.
 - Added a Python Railway member portal using Discord authorization-code OAuth2.

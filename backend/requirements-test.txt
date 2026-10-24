@@ -1,2 +1,2 @@
 -r requirements.txt
-fakeredis[lua]==2.40.0
+fakeredis==2.40.0

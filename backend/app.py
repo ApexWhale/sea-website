@@ -60,9 +60,24 @@ def create_app(settings=None, store=None):
     def limited(bucket, limit, seconds):
         # Global buckets avoid trusting user-supplied proxy/IP headers.
         k = 'sea:limit:' + bucket
-        count = db.eval("local n=redis.call('INCR',KEYS[1]); if n==1 then redis.call('EXPIRE',KEYS[1],ARGV[1]) end; return n", 1, k, seconds)
-        if count > limit:
-            abort(429, 'Too many requests. Please wait a minute and try again.')
+        # WATCH keeps concurrent workers from creating or updating a stale window.
+        # Redis transactions avoid a Lua/native-library dependency in local tests.
+        for _ in range(5):
+            with db.pipeline() as pipe:
+                try:
+                    pipe.watch(k)
+                    count = int(pipe.get(k) or 0)
+                    if count >= limit:
+                        abort(429, 'Too many requests. Please wait a minute and try again.')
+                    pipe.multi()
+                    pipe.incr(k)
+                    if count == 0:
+                        pipe.expire(k, seconds)
+                    pipe.execute()
+                    return
+                except redis.WatchError:
+                    continue
+        abort(503, 'Member access is busy. Please try again shortly.')
 
     def discord(method, path, token=None, data=None):
         if db.exists('sea:discord_backoff'):
