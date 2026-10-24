@@ -1,19 +1,22 @@
-# Content sources and boundaries
+# Content sources and boundaries — v1.1.0
 
-Reviewed 22 October 2026.
+The uploaded sea-website.zip is the source of truth for the existing website. Its
+Alliance/PvE copy, class descriptions, SEA branding, artwork and Discord invitation
+are preserved. This release does not independently verify those guild facts or the
+invitation. No new raid times, member counts, recruitment claims or officer names
+have been invented. The regional FAQ wording was explicitly supplied by the owner.
 
-## Supplied by the owner
+The target dashboard.sleepeatafk.com address is a proposed setup address, not a
+claim that a service or DNS record already exists. No credentials were supplied.
+The public login remains unconnected until setup is complete.
 
-The name Sleep Eat AFK, tag [SEA], game WoW Forever, and intended domain sleepeatafk.com come from the request. The site does not expand SEA into a geographical claim.
+Official references checked for the implementation and deployment guide:
+- Discord OAuth2: https://docs.discord.com/developers/topics/oauth2
+- Current user guild member: https://docs.discord.com/developers/resources/user#get-current-user-guild-member
+- Cloudflare static HTML: https://developers.cloudflare.com/pages/framework-guides/deploy-anything/
+- Cloudflare custom domains: https://developers.cloudflare.com/pages/configuration/custom-domains/
+- Railway domains: https://docs.railway.com/networking/domains/working-with-domains
+- Railway healthchecks: https://docs.railway.com/deployments/healthchecks
 
-## Public reference inspected
-
-https://dnguild.com/ identifies **Dawning Nemesis**, a different WoW Forever guild. Its navigation, community introduction and onward links served as broad structural inspiration. No public Sleep Eat AFK facts were found in the inspected homepage or the targeted site search. This is a bounded inspection, not proof that none exist anywhere on the domain.
-
-No Dawning Nemesis history, membership numbers, faction, region, recruitment status, raid schedules, launch dates, Discord invitation, artwork or branding have been reused as SEA information.
-
-## Original presentation copy
-
-Taglines such as “Azeroth is better with company” and “Remember to eat” are creative brand copy, not claims about guild accomplishments or policies. The SVG crest is an original design concept, not a verified existing guild logo. The landscape is original vector artwork, not an in-game screenshot.
-
-No SEA Discord URL, dashboard deployment, faction, realm, officer list, raid schedule, recruitment openings or progression results were supplied or verified. They are intentionally not asserted. The site contains no application form or tracking scripts. Optional buttons appear only after the owner supplies real links.
+The portal verifies a Discord server membership and configured Discord roles. It
+does not verify in-game character ownership or communicate automatically with WoW.

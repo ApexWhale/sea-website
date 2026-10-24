@@ -1,11 +1,39 @@
-# Verification — v1.0.0
+# Verification — v1.1.0
 
-Performed 22 October 2026:
+Performed 24 October 2026 against the supplied ZIP and updated files.
 
-- PASS: Node.js syntax checks for app.js, config.js and preview.cjs.
-- PASS: Every local asset referenced by index.html exists.
-- PASS: Every nonempty section anchor in index.html has a matching ID.
-- PASS: Link logic exercised in an isolated Node context with a minimal document test double: empty config adds no buttons; valid HTTPS config enables Discord and both dashboard links; non-Discord invitation host, JavaScript URL and credential-bearing URL are rejected. Test URLs were examples only and were not added to production config or visited.
-- Preview server printed its local listening URL. Browser access timed out; a local HTTP request was blocked by the environment's socket permissions. No successful HTTP response or rendered browser inspection was obtained.
+## Passed
 
-Not verified: visual rendering, mobile overflow, keyboard behavior in a real browser, Cloudflare header application, live DNS, live Discord invitations, dashboard availability, GitHub push or deployment. Follow README's manual checks before production launch. No live accounts or DNS records were changed.
+- 12 backend unittest cases using Flask's request client, fake Redis (including Lua)
+  and simulated Discord API responses: member/officer access, live role removal,
+  missing sessions, one-use/browser-bound state, state expiry and consent cancellation,
+  screening and role denial, sign-out CSRF/origin checks and session invalidation,
+  expired sessions, upstream failures, Redis outage, rate limits and invalid config.
+- HTML escaping of the simulated Discord display name; tokens absent from response
+  HTML and plaintext Redis session values; Secure/HttpOnly/SameSite cookie flags.
+- JavaScript syntax checks for the updated app.js and supplied config.js.
+- Five frontend configuration cases: empty URL, JavaScript URL, HTTP URL and a URL
+  with embedded credentials are rejected; a valid HTTPS login URL enables links.
+- Local assets and section anchor references in index.html resolve.
+- Local HTTP preview returned status 200.
+- Compared against the original ZIP: no source file was removed; original styles,
+  images/assets, invite configuration, Cloudflare headers, error page, sitemap,
+  robots.txt and preview server were preserved byte-for-byte.
+
+Tests ran with Python 3.9 on this Mac. The deployable Dockerfile targets Python 3.12.
+The local urllib3 library warned about this Mac Python's LibreSSL; tests mocked
+external HTTP and made no real Discord requests. The Docker image was not built here.
+
+## Not verified
+
+- Actual Discord consent/token exchange, actual server membership or role IDs.
+- A live Redis service; Redis behavior was simulated in tests.
+- Browser visual rendering, responsive layout and keyboard behavior. The browser
+  control tool failed to bind the preview tab; HTTP preview itself worked.
+- Railway container build, production healthchecks, DNS, HTTPS certificate issuance,
+  Cloudflare header application or live invitation validity.
+- GitHub commit/push, Railway deployment or Cloudflare publication. None performed.
+
+Follow README.md for setup and live acceptance tests before enabling the public
+login link. Secrets were not provided or invented. Tests use clearly synthetic IDs
+and a temporary encryption key; no test credentials are production configuration.
