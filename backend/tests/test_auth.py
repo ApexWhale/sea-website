@@ -202,6 +202,27 @@ class AuthTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'REDIS_URL must resolve'):
             create_app(dict(self.env, REDIS_URL='REDIS_URL'), self.db)
 
+    def test_health_ready_without_login(self):
+        response = self.get('/health')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'status':'ok', 'redis':'connected', 'version':'1.2.1'})
+        self.assertEqual(response.headers['Cache-Control'], 'no-store')
+        self.calls.assert_not_called()
+
+    def test_health_redis_outage_returns_safe_json(self):
+        with patch.object(self.db, 'ping', side_effect=redis.ConnectionError('SECRET-CONNECTION')):
+            with self.assertLogs(self.app.logger, level='WARNING') as logs:
+                response = self.get('/health')
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json['redis'], 'unavailable')
+        self.assertNotIn(b'SECRET-CONNECTION', response.data)
+        self.assertNotIn('SECRET-CONNECTION', ' '.join(logs.output))
+        self.calls.assert_not_called()
+
+    def test_health_negative_ping_is_unavailable(self):
+        with patch.object(self.db, 'ping', return_value=False):
+            self.assertEqual(self.get('/health').status_code, 503)
+
     def test_invalid_config(self):
         for field, value in [('MEMBER_ROLE_IDS',''),('PUBLIC_BASE_URL','http://example.com'),('DISCORD_GUILD_ID','guild-name'),('MEMBER_ROLE_IDS',self.env['DISCORD_GUILD_ID'])]:
             with self.assertRaises(ValueError): create_app(dict(self.env,**{field:value}),self.db)

@@ -1,56 +1,22 @@
-# Verification — v1.1.2
+# Verification — v1.2.1
 
-Performed 24 October 2026 against the supplied ZIP and updated files.
+Performed 24 October 2026:
+- 22 backend tests passed with fake Redis and mocked Discord requests.
+- Includes login/state replay, session expiry, member/officer authorization, role
+  removal, screening, CSRF-protected sign-out, rate windows, fail-closed Redis and
+  Discord failures, safe diagnostics, startup configuration and health responses.
+- Health tests verify unauthenticated HTTP 200/Redis connected, HTTP 503 on Redis
+  connection failure or negative ping, no Discord calls, and no exception details
+  or credentials in the health JSON/logs.
+- Frontend syntax and link configuration checks passed for app.js and config.js.
+- Public member-access coming-soon section removed; header buttons grouped.
+- Local HTML assets and anchors resolve; artwork unchanged from the supplied ZIP.
 
-## Passed
-
-- 19 backend unittest cases using Flask's request client, fake Redis (without Lua)
-  and simulated Discord API responses: member/officer access, live role removal,
-  missing sessions, one-use/browser-bound state, state expiry and consent cancellation,
-  screening and role denial, sign-out CSRF/origin checks and session invalidation,
-  expired sessions, upstream failures, Redis outage, rate limits and invalid config; fixed rate-window expiry and fail-closed transaction contention.
-- HTML escaping of the simulated Discord display name; tokens absent from response
-  HTML and plaintext Redis session values; Secure/HttpOnly/SameSite cookie flags.
-- JavaScript syntax checks for the updated app.js and supplied config.js.
-- Five frontend configuration cases: empty URL, JavaScript URL, HTTP URL and a URL
-  with embedded credentials are rejected; a valid HTTPS login URL enables links.
-- Local assets and section anchor references in index.html resolve.
-- Local HTTP preview returned status 200.
-- Compared against the original ZIP: no source file was removed; original styles,
-  images/assets, invite configuration, Cloudflare headers, error page, sitemap,
-  robots.txt and preview server were preserved byte-for-byte.
-
-Tests ran with Python 3.9 on this Mac. The deployable Dockerfile targets Python 3.12.
-The local urllib3 library warned about this Mac Python's LibreSSL; tests mocked
-external HTTP and made no real Discord requests. The Docker image was not built here.
-
-## Not verified
-
-- Actual Discord consent/token exchange, actual server membership or role IDs.
-- A live Redis service; Redis behavior was simulated in tests.
-- Browser visual rendering, responsive layout and keyboard behavior. The browser
-  control tool failed to bind the preview tab; HTTP preview itself worked.
-- Railway container build, production healthchecks, DNS, HTTPS certificate issuance,
-  Cloudflare header application or live invitation validity.
-- GitHub commit/push, Railway deployment or Cloudflare publication. None performed.
-
-Follow README.md for setup and live acceptance tests before enabling the public
-login link. Secrets were not provided or invented. Tests use clearly synthetic IDs
-and a temporary encryption key; no test credentials are production configuration.
-
-## v1.1.1 dependency verification
-
-Removed lupa from the local test environment before running all 14 tests; all passed.
-The environment dependency check passed. No actual Redis server or live Discord
-connection was used. The original Mac compiler failure was not reproduced; this
-release removes the package that failed to build.
-
-## v1.1.2 diagnostic verification
-
-All 19 tests passed on 24 October 2026 with simulated Discord and Redis. New tests
-cover token/profile/membership diagnostic separation, safe logging of allowed
-error codes, suppression of secrets and untrusted response fields, role/screening
-references, missing-variable names and invalid Redis configuration. The canonical
-OAuth token endpoint was verified in the mocked request. Production Discord
-login has not been tested and the user's current live rejection remains undiagnosed
-until a new diagnostic reference is available.
+Limits:
+- Backend tests ran locally with Python 3.9 on macOS; Docker targets Python 3.12.
+  The local urllib3 warning about LibreSSL did not affect mocked HTTP tests.
+- No production Redis/Discord request, Docker build, visual browser/mobile check,
+  GitHub push, Cloudflare deployment or Railway deployment performed for this release.
+- Discord login errors on the user's deployment are not confirmed resolved. The
+  package supplies safe diagnostic references for any remaining failure.
+- The health endpoint checks Redis, not Discord credentials or configured roles.

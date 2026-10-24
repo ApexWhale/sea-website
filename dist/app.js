@@ -14,17 +14,13 @@
       link.hidden = false;
     });
   }
-  // The Railway member portal is supplied in backend/.
-  // A real authentication service must be deployed before setting memberLoginUrl.
+  // The backend starts Discord OAuth, then redirects approved users to /members.
+  // A working default href in HTML also supports visitors without JavaScript.
   const login = httpsUrl(config.memberLoginUrl);
   if (login) {
-    document.querySelectorAll("[data-member-login], [data-member-enter]").forEach(link => {
+    document.querySelectorAll("[data-member-login]").forEach(link => {
       link.href = login.href;
       link.hidden = false;
     });
-    const faq = document.querySelector("[data-member-faq]");
-    if (faq) faq.textContent = "Approved SEA members can sign in with Discord using Member Login. Access depends on your guild role. Raid sign-ups are not available yet; check Discord for current activities.";
-    document.querySelector("[data-member-status]").textContent = "Sign in with Discord.";
-    document.querySelector("[data-member-note]").textContent = "Sign in with Discord to verify your SEA membership. Access requires an approved guild role. Raid sign-ups are not available yet.";
   }
 })();

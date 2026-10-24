@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.1 — 24 October 2026
+- Combined the requested header/login changes and diagnostic backend in one complete package.
+- Health check returns HTTP 200 with Redis status when ready, HTTP 503 JSON when Redis is unavailable.
+- Added three health-check tests and one authoritative macOS/GitHub/Cloudflare/Railway guide.
+- Retained Discord role verification, encrypted sessions, and safe diagnostics.
+
+## 1.2.0 — 24 October 2026
+- Removed the public For Guild Members / Member access / Coming soon section.
+- Grouped Member Login directly beside Join Discord with an 8–10px gap.
+- Connected Member Login to the Railway Discord sign-in endpoint, including without JavaScript.
+- Updated the member FAQ and removed scripts/styles for the deleted section.
+- No backend authentication, role checks, secrets or dashboard changes.
+
 ## 1.1.2 — 24 October 2026
 - Replaced ambiguous Discord failures with stage-specific diagnostic references.
 - Added sanitized error logging without tokens, secrets, user IDs or response bodies.

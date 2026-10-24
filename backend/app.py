@@ -212,8 +212,16 @@ def create_app(settings=None, store=None):
 
     @app.get('/health')
     def health():
-        db.ping()
-        return {'status': 'ok'}
+        # Public readiness check: verifies Redis without Discord login or secrets.
+        try:
+            ready = bool(db.ping())
+        except redis.RedisError as exc:
+            app.logger.warning('Health check failed dependency=redis error_type=%s',
+                               type(exc).__name__)
+            ready = False
+        if not ready:
+            return {'status': 'unavailable', 'redis': 'unavailable', 'version': '1.2.1'}, 503
+        return {'status': 'ok', 'redis': 'connected', 'version': '1.2.1'}
 
     @app.get('/')
     def home():
