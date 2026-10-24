@@ -144,6 +144,64 @@ class AuthTests(unittest.TestCase):
             self.assertEqual(self.get('/auth/discord').status_code, 503)
         self.assertEqual(self.db.exists('sea:limit:login'), 0)
 
+    def test_token_error_is_specific_and_redacted(self):
+        self.calls.side_effect = None
+        self.calls.return_value = Mock(status_code=401, headers={}, json=lambda: {
+            'error':'invalid_client', 'error_description':'SECRET-DO-NOT-LOG',
+            'access_token':'TOKEN-DO-NOT-LOG'})
+        with self.assertLogs(self.app.logger, level='WARNING') as logs:
+            result = self.login()
+        self.assertEqual(result.status_code, 403)
+        self.assertIn(b'TOKEN-401', result.data)
+        self.assertIn(b'application credentials', result.data)
+        self.assertIn('oauth_error=invalid_client', ' '.join(logs.output))
+        for private in ('SECRET-DO-NOT-LOG', 'TOKEN-DO-NOT-LOG', 'test-only'):
+            self.assertNotIn(private, ' '.join(logs.output))
+            self.assertNotIn(private.encode(), result.data)
+        self.assertEqual(self.calls.call_args.args[1], 'https://discord.com/api/oauth2/token')
+
+    def test_membership_error_is_specific(self):
+        self.login()
+        self.calls.side_effect = None
+        self.calls.return_value = Mock(status_code=404, headers={}, json=lambda: {
+            'code':10004, 'message':'PRIVATE-RESPONSE'})
+        with self.assertLogs(self.app.logger, level='WARNING') as logs:
+            result = self.get('/members')
+        self.assertEqual(result.status_code,403)
+        self.assertIn(b'MEMBERSHIP-404', result.data)
+        self.assertIn('discord_code=10004', ' '.join(logs.output))
+        self.assertNotIn('PRIVATE-RESPONSE', ' '.join(logs.output))
+
+    def test_profile_error_and_untrusted_fields(self):
+        def response(method, url, **kwargs):
+            if url.endswith('/users/@me'):
+                return Mock(status_code=403, headers={}, json=lambda: {
+                    'code':'SECRET', 'error':'SECRET', 'message':'SECRET'})
+            return self.discord(method, url, **kwargs)
+        self.calls.side_effect = response
+        with self.assertLogs(self.app.logger, level='WARNING') as logs:
+            result = self.login()
+        self.assertIn(b'PROFILE-403', result.data)
+        self.assertNotIn('SECRET', ' '.join(logs.output))
+        self.assertNotIn(b'SECRET', result.data)
+
+    def test_role_and_screening_references(self):
+        self.roles = []
+        self.assertIn(b'ROLE-MISSING', self.login().data)
+        self.roles = [MEMBER]
+        self.pending = True
+        self.assertIn(b'SCREENING-PENDING', self.login().data)
+
+    def test_startup_names_missing_settings_without_values(self):
+        with self.assertRaises(ValueError) as error:
+            create_app(dict(self.env, MEMBER_ROLE_IDS='', DISCORD_CLIENT_SECRET=''), self.db)
+        message = str(error.exception)
+        self.assertIn('MEMBER_ROLE_IDS', message)
+        self.assertIn('DISCORD_CLIENT_SECRET', message)
+        self.assertNotIn(self.env['TOKEN_ENCRYPTION_KEY'], message)
+        with self.assertRaisesRegex(ValueError, 'REDIS_URL must resolve'):
+            create_app(dict(self.env, REDIS_URL='REDIS_URL'), self.db)
+
     def test_invalid_config(self):
         for field, value in [('MEMBER_ROLE_IDS',''),('PUBLIC_BASE_URL','http://example.com'),('DISCORD_GUILD_ID','guild-name'),('MEMBER_ROLE_IDS',self.env['DISCORD_GUILD_ID'])]:
             with self.assertRaises(ValueError): create_app(dict(self.env,**{field:value}),self.db)

@@ -1,10 +1,10 @@
-# Verification — v1.1.1
+# Verification — v1.1.2
 
 Performed 24 October 2026 against the supplied ZIP and updated files.
 
 ## Passed
 
-- 14 backend unittest cases using Flask's request client, fake Redis (without Lua)
+- 19 backend unittest cases using Flask's request client, fake Redis (without Lua)
   and simulated Discord API responses: member/officer access, live role removal,
   missing sessions, one-use/browser-bound state, state expiry and consent cancellation,
   screening and role denial, sign-out CSRF/origin checks and session invalidation,
@@ -44,3 +44,13 @@ Removed lupa from the local test environment before running all 14 tests; all pa
 The environment dependency check passed. No actual Redis server or live Discord
 connection was used. The original Mac compiler failure was not reproduced; this
 release removes the package that failed to build.
+
+## v1.1.2 diagnostic verification
+
+All 19 tests passed on 24 October 2026 with simulated Discord and Redis. New tests
+cover token/profile/membership diagnostic separation, safe logging of allowed
+error codes, suppression of secrets and untrusted response fields, role/screening
+references, missing-variable names and invalid Redis configuration. The canonical
+OAuth token endpoint was verified in the mocked request. Production Discord
+login has not been tested and the user's current live rejection remains undiagnosed
+until a new diagnostic reference is available.

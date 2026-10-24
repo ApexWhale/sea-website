@@ -9,7 +9,7 @@ from urllib.parse import urlencode, urlsplit
 import redis
 import requests
 from cryptography.fernet import Fernet, InvalidToken
-from flask import Flask, abort, g, make_response, redirect, render_template, request
+from flask import Flask, abort, g, redirect, render_template, request
 from werkzeug.exceptions import HTTPException
 
 API = 'https://discord.com/api/v10'
@@ -24,8 +24,9 @@ def create_app(settings=None, store=None):
     env = dict(os.environ if settings is None else settings)
     required = ('DISCORD_CLIENT_ID', 'DISCORD_CLIENT_SECRET', 'DISCORD_GUILD_ID',
                 'MEMBER_ROLE_IDS', 'PUBLIC_BASE_URL', 'TOKEN_ENCRYPTION_KEY', 'REDIS_URL')
-    if any(not env.get(k, '').strip() for k in required):
-        raise ValueError('Set every required variable listed in backend/.env.example.')
+    missing = [k for k in required if not env.get(k, '').strip()]
+    if missing:
+        raise ValueError('Missing required Railway variables: ' + ', '.join(missing))
     base = env['PUBLIC_BASE_URL'].rstrip('/')
     parsed = urlsplit(base)
     if (parsed.scheme != 'https' or not parsed.hostname or parsed.path or
@@ -42,7 +43,12 @@ def create_app(settings=None, store=None):
             raise ValueError(key + ' must be a Discord ID.')
     if not members or env['DISCORD_GUILD_ID'] in members | officers:
         raise ValueError('Use explicit member roles; @everyone cannot grant access.')
-    cipher = Fernet(env['TOKEN_ENCRYPTION_KEY'].encode())
+    try:
+        cipher = Fernet(env['TOKEN_ENCRYPTION_KEY'].encode())
+    except (ValueError, TypeError):
+        raise ValueError('TOKEN_ENCRYPTION_KEY is not a valid generated Fernet key.') from None
+    if urlsplit(env['REDIS_URL']).scheme not in ('redis', 'rediss'):
+        raise ValueError('REDIS_URL must resolve to a redis:// or rediss:// connection URL. Use a Railway Redis variable reference.')
     db = store if store is not None else redis.Redis.from_url(
         env['REDIS_URL'], socket_connect_timeout=3, socket_timeout=3, decode_responses=True)
     callback = base + '/auth/discord/callback'
@@ -80,25 +86,65 @@ def create_app(settings=None, store=None):
         abort(503, 'Member access is busy. Please try again shortly.')
 
     def discord(method, path, token=None, data=None):
+        stage = ('TOKEN' if path == '/oauth2/token' else
+                 'PROFILE' if path == '/users/@me' else 'MEMBERSHIP')
+        endpoint = ('https://discord.com/api/oauth2/token'
+                    if stage == 'TOKEN' else API + path)
         if db.exists('sea:discord_backoff'):
             abort(503, 'Discord is busy. Please try again shortly.')
         try:
-            response = requests.request(method, API + path, data=data,
+            response = requests.request(method, endpoint, data=data,
                 headers={'Authorization': 'Bearer ' + token} if token else {},
                 timeout=(3, 10), allow_redirects=False)
         except requests.RequestException:
-            abort(503, 'Discord is unavailable. Please try again shortly.')
+            app.logger.warning('Discord request failed stage=%s transport=unavailable', stage)
+            abort(503, 'Discord is unavailable. Please try again shortly. Reference: ' + stage + '-NETWORK.')
+        # Log only fixed stage names, HTTP status, numeric Discord codes and a
+        # small OAuth error allowlist. Never log response bodies, URLs or tokens.
+        if not 200 <= response.status_code < 300:
+            discord_code, oauth_error = 'none', 'none'
+            try:
+                details = response.json()
+                if isinstance(details, dict):
+                    value = details.get('code')
+                    if type(value) is int and 0 <= value <= 999999999:
+                        discord_code = str(value)
+                    value = details.get('error')
+                    if isinstance(value, str) and value in (
+                            'invalid_client', 'invalid_grant', 'invalid_scope',
+                            'invalid_request', 'unauthorized_client',
+                            'unsupported_grant_type', 'access_denied'):
+                        oauth_error = value
+            except ValueError:
+                pass
+            reference = stage + '-' + str(response.status_code)
+            app.logger.warning('Discord request rejected stage=%s status=%s discord_code=%s oauth_error=%s',
+                               stage, response.status_code, discord_code, oauth_error)
         if response.status_code == 429:
             try:
                 delay = min(3600, max(1, int(float(response.headers.get('Retry-After', '60'))) + 1))
             except ValueError:
                 delay = 60
             db.setex('sea:discord_backoff', delay, '1')
-            abort(503, 'Discord is busy. Please try again shortly.')
-        if response.status_code in (401, 403, 404):
-            abort(403, 'Access could not be verified. Sign in again or ask a guild officer to check your membership and roles.')
+            abort(503, 'Discord is busy. Please try again shortly. Reference: ' + reference + '.')
         if not 200 <= response.status_code < 300:
-            abort(503, 'Discord could not complete the request. Please try signing in again shortly.')
+            if stage == 'TOKEN':
+                if oauth_error == 'invalid_client' or response.status_code == 401:
+                    message = 'Discord rejected the website application credentials. The site owner must check that DISCORD_CLIENT_ID and DISCORD_CLIENT_SECRET belong to the same application.'
+                elif oauth_error == 'invalid_grant':
+                    message = 'Discord rejected the sign-in code. Start a new login. If this repeats, the site owner must check the registered callback URL.'
+                else:
+                    message = 'Discord could not complete the login exchange. Ask the site owner to check the diagnostic reference in Railway logs.'
+            elif stage == 'MEMBERSHIP' and response.status_code in (403, 404):
+                message = 'Discord could not confirm this account in the configured SEA server. Check the Discord account used to sign in and ask the site owner to verify DISCORD_GUILD_ID and the membership permission.'
+            elif response.status_code == 401:
+                message = 'Discord rejected this authorization. Please start a new sign-in.'
+            elif stage == 'PROFILE':
+                message = 'Discord could not provide your profile. Start a new sign-in; if this repeats, ask the site owner to check the diagnostic reference.'
+            else:
+                message = 'Discord could not complete the membership check. Please try again shortly.'
+            status = 403 if response.status_code in (400, 401, 403, 404) else 503
+            abort(status, message + ' Reference: ' + reference + '.')
         try:
             result = response.json()
             if not isinstance(result, dict):
@@ -110,8 +156,12 @@ def create_app(settings=None, store=None):
     def membership(token):
         member = discord('GET', '/users/@me/guilds/' + env['DISCORD_GUILD_ID'] + '/member', token)
         roles = set(member.get('roles', []))
-        if member.get('pending') or not roles.intersection(members | officers):
-            abort(403, 'You need an approved SEA member role and completed Discord server screening. Please contact a guild officer.')
+        if member.get('pending'):
+            app.logger.warning('SEA access denied reason=screening_pending')
+            abort(403, 'Complete the SEA Discord server membership screening, then try again. Reference: SCREENING-PENDING.')
+        if not roles.intersection(members | officers):
+            app.logger.warning('SEA access denied reason=approved_role_missing')
+            abort(403, 'Your Discord account is in the server but does not have a configured member or officer role. Contact a guild officer. Reference: ROLE-MISSING.')
         return bool(roles & officers)
 
     def session():
